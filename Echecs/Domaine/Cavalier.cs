@@ -13,9 +13,18 @@ namespace Echecs.Domaine
 
         public override bool Deplacer(Case destination)
         {
-            destination.Link(this);
+            bool deplacementPossible = false;
 
-            return true;
+            int diffCol = Math.Abs(destination.col - this.position.col);
+            int diffRow = Math.Abs(destination.row - this.position.row);
+
+            if ((diffCol == 2 && diffRow == 1) || (diffCol == 1 && diffRow == 2))
+            {
+                destination.Link(this);
+                deplacementPossible = true;
+            }
+
+            return deplacementPossible;
         }
     }
 }

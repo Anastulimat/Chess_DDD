@@ -27,12 +27,10 @@ namespace Echecs.Domaine
 
 
         /* attributs */
-
         StatusPartie _status = StatusPartie.Reset;
 
 
         /* associations */
-        
         IEvenements _vue;
         Joueur blancs;
         Joueur noirs;
@@ -40,7 +38,6 @@ namespace Echecs.Domaine
 
 
         /* methodes */
-
         public void CommencerPartie()
         {
             // creation des joueurs
@@ -51,30 +48,23 @@ namespace Echecs.Domaine
             echiquier = new Echiquier(this);
 
             // placement des pieces
-            blancs.PlacerPieces(echiquier);  // TODO : décommentez lorsque vous auriez implementé les methode Unlink et Link de la classe Case
+            blancs.PlacerPieces(echiquier);
             foreach (Piece piece in blancs.pieces)
                 vue.ActualiserCase(piece.position.row, piece.position.col, piece.info);
 
-            noirs.PlacerPieces(echiquier);  // TODO : décommentez lorsque vous auriez implementé les methode Unlink et Link de la classe Case
+            noirs.PlacerPieces(echiquier);
             foreach (Piece piece in noirs.pieces)
                 vue.ActualiserCase(piece.position.row, piece.position.col, piece.info);
 
-            /* TEST */
-            //vue.ActualiserCase(4, 0, InfoPiece.RoiNoir);
-            //vue.ActualiserCase(4, 7, InfoPiece.RoiBlanc);
-            /* FIN TEST */
 
             // initialisation de l'état
             status = StatusPartie.TraitBlancs;         
         }
 
+
+
         public void DeplacerPiece(int x_depart, int y_depart, int x_arrivee, int y_arrivee)
         {
-            /* TEST */
-            vue.ActualiserCase(x_depart,  y_depart,  null);
-            vue.ActualiserCase(x_arrivee, y_arrivee, InfoPiece.RoiBlanc);
-            /* FIN TEST */
-
             // case de départ
             Case depart = echiquier.cases[x_depart, y_depart];
 
@@ -82,11 +72,21 @@ namespace Echecs.Domaine
             Case destination = echiquier.cases[x_arrivee, y_arrivee];
 
             // deplacer
-            //bool ok = depart.piece.Deplacer(destination);
+            bool ok = depart.piece.Deplacer(destination);
+
+            Console.WriteLine("Current ok value : " + ok);
+
+            vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
+            vue.ActualiserCase(depart.row, depart.col, null);
+
+            /* TEST */
+            //vue.ActualiserCase(x_depart, y_depart, null);
+            //vue.ActualiserCase(x_arrivee, y_arrivee, InfoPiece.RoiBlanc);
+            /* FIN TEST */
 
             // changer d'état
-            //if (ok)
-            //    ChangerEtat();
+            if (ok)
+                ChangerEtat();
         }
 
         void ChangerEtat(bool echec = false, bool mat = false)
