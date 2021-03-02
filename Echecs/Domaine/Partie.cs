@@ -26,6 +26,7 @@ namespace Echecs.Domaine
         }
 
 
+
         /* attributs */
         StatusPartie _status = StatusPartie.Reset;
 
@@ -34,7 +35,9 @@ namespace Echecs.Domaine
         IEvenements _vue;
         Joueur blancs;
         Joueur noirs;
-        Echiquier echiquier;
+        public Echiquier echiquier;
+
+
 
 
         /* methodes */
@@ -73,8 +76,6 @@ namespace Echecs.Domaine
 
             // deplacer
             bool ok = depart.piece.Deplacer(destination);
-
-            Console.WriteLine("Current ok value : " + ok);
 
             vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
             vue.ActualiserCase(depart.row, depart.col, null);
