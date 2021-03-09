@@ -13,9 +13,25 @@ namespace Echecs.Domaine
 
         public override bool Deplacer(Case destination)
         {
-            destination.Link(this);
+            if (this.DeplacementSurLaMemeCouleur(destination))
+                return false;
 
-            return true;
+
+            bool deplacementPossible = false;
+
+            int diffCol = destination.col - this.position.col;
+            int diffRow = destination.row - this.position.row;
+
+            int rowToCheck = this.position.row;
+            int colToCheck = this.position.col;
+            int i = 0;
+
+            if(Math.Abs(diffCol) <= 1 && Math.Abs(diffRow) <= 1)
+            {
+                deplacementPossible = true;
+            }
+
+            return deplacementPossible;
         }
     }
 }

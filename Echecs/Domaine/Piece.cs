@@ -24,5 +24,10 @@ namespace Echecs.Domaine
         }
 
         public abstract bool Deplacer(Case destination);
+
+        public bool DeplacementSurLaMemeCouleur(Case destination)
+        {
+            return destination.piece != null && destination.piece.joueur.couleur == this.joueur.couleur;
+        }
     }
 }
