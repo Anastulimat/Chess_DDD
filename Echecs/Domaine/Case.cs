@@ -23,10 +23,11 @@ namespace Echecs.Domaine
         {
             row = x;
             col = y;
+            this.piece = null;
         }
 
         
-
+    
         public void Link(Piece newPiece)
         {
             // 1. Deconnecter newPiece de l'ancienne case

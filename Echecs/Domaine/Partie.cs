@@ -77,8 +77,7 @@ namespace Echecs.Domaine
             // deplacer
             bool ok = depart.piece.Deplacer(destination);
 
-            vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
-            vue.ActualiserCase(depart.row, depart.col, null);
+
 
             /* TEST */
             //vue.ActualiserCase(x_depart, y_depart, null);
@@ -87,7 +86,14 @@ namespace Echecs.Domaine
 
             // changer d'état
             if (ok)
+            {
+                destination.Link(depart.piece);
+                depart.Unlink();
+                vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
+                vue.ActualiserCase(depart.row, depart.col, null);
                 ChangerEtat();
+            }
+                
         }
 
         void ChangerEtat(bool echec = false, bool mat = false)

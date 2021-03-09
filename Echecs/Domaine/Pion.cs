@@ -13,7 +13,7 @@ namespace Echecs.Domaine
 
         public override bool Deplacer(Case destination)
         {
-            destination.Link(this);
+            //destination.Link(this);
 
             return true;
         }

@@ -17,30 +17,67 @@ namespace Echecs.Domaine
 
             int diffCol = destination.col - this.position.col;
             int diffRow = destination.row - this.position.row;
+            int i = 0;
 
-            // Déplacement vertical sur une colonne
-            if(diffCol == 0 && diffRow != 0)
+            if (diffCol != 0 && diffRow == 0)
             {
+                Console.WriteLine("Déplacement vertical sur une colonne");
+                Console.WriteLine("diffCol != 0 && diffRow == 0");
                 Console.WriteLine("diffCol = " + diffCol);
                 Console.WriteLine("diffRow = " + diffRow);
-                int rowActuel = this.position.row;
-                int i = 0;
+                int colTocheck = this.position.col;
+                Console.WriteLine("colTocheck = " + colTocheck);
+                
+                // On vérifie si le déplacement est possible et si la voie est libre
+                do
+                {
+                    if (diffCol < 0)
+                        colTocheck--;
+                    else if (diffCol > 0)
+                        colTocheck++;
+
+                    // On vérifie si la case est vide
+                    if (joueur.partie.echiquier.cases[this.position.row, colTocheck].piece == null)
+                    {
+                        deplacementPossible = true;
+                    }
+                    else
+                    {
+                        deplacementPossible = false;
+                    }
+                    ++i;
+                }
+                while (deplacementPossible && i < Math.Abs(diffCol));
+            }
+
+            if (diffCol == 0 && diffRow != 0)
+            {
+                Console.WriteLine("Déplacement horizontal sur une ligne !");
+                Console.WriteLine("diffCol == 0 && diffRow != 0");
+                Console.WriteLine("diffCol = " + diffCol);
+                Console.WriteLine("diffRow = " + diffRow);
+                int rowToCheck = this.position.row;
                 // On vérifie si le déplacement est possible et si la voie est libre
                 do
                 {
                     if (diffRow < 0)
-                        rowActuel--;
+                        rowToCheck--;
                     else if (diffRow > 0)
-                        rowActuel++;
+                        rowToCheck++;
 
                     // On vérifie si la case est vide
-                    deplacementPossible = joueur.partie.echiquier.cases[rowActuel, this.position.col].piece == null;
-
+                    if (joueur.partie.echiquier.cases[rowToCheck, this.position.col].piece == null)
+                    {
+                        deplacementPossible = true;
+                    }
+                    else
+                    {
+                        deplacementPossible = false;
+                    }
+                    ++i;
                 }
                 while (deplacementPossible && i < Math.Abs(diffRow));
             }
-            destination.Link(this);
-
 
             return deplacementPossible;
         }

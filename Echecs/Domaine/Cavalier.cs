@@ -20,7 +20,6 @@ namespace Echecs.Domaine
 
             if ((diffCol == 2 && diffRow == 1) || (diffCol == 1 && diffRow == 2))
             {
-                destination.Link(this);
                 deplacementPossible = true;
             }
 
