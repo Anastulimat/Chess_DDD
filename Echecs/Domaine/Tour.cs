@@ -21,12 +21,14 @@ namespace Echecs.Domaine
 
             if (diffCol != 0 && diffRow == 0)
             {
-                Console.WriteLine("Déplacement vertical sur une colonne");
-                Console.WriteLine("diffCol != 0 && diffRow == 0");
-                Console.WriteLine("diffCol = " + diffCol);
-                Console.WriteLine("diffRow = " + diffRow);
+                //console.writeline("déplacement vertical sur une colonne");
+                //console.writeline("diffcol != 0 && diffrow == 0");
+                //console.writeline("diffcol = " + diffcol);
+                //console.writeline("diffrow = " + diffrow);
+
                 int colTocheck = this.position.col;
-                Console.WriteLine("colTocheck = " + colTocheck);
+
+                //Console.WriteLine("colTocheck = " + colTocheck);
                 
                 // On vérifie si le déplacement est possible et si la voie est libre
                 do
@@ -52,10 +54,11 @@ namespace Echecs.Domaine
 
             if (diffCol == 0 && diffRow != 0)
             {
-                Console.WriteLine("Déplacement horizontal sur une ligne !");
-                Console.WriteLine("diffCol == 0 && diffRow != 0");
-                Console.WriteLine("diffCol = " + diffCol);
-                Console.WriteLine("diffRow = " + diffRow);
+                //Console.WriteLine("Déplacement horizontal sur une ligne !");
+                //Console.WriteLine("diffCol == 0 && diffRow != 0");
+                //Console.WriteLine("diffCol = " + diffCol);
+                //Console.WriteLine("diffRow = " + diffRow);
+
                 int rowToCheck = this.position.row;
                 // On vérifie si le déplacement est possible et si la voie est libre
                 do
