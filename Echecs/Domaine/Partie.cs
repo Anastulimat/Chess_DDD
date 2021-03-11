@@ -36,7 +36,7 @@ namespace Echecs.Domaine
         Joueur blancs;
         Joueur noirs;
         public Echiquier echiquier;
-
+        List<InfoPiece> piecesCapturees;
 
 
 
@@ -49,6 +49,9 @@ namespace Echecs.Domaine
 
             // creation de l'echiquier
             echiquier = new Echiquier(this);
+
+            //piecesCapturees
+            piecesCapturees = new List<InfoPiece>();
 
             // placement des pieces
             blancs.PlacerPieces(echiquier);
@@ -87,10 +90,67 @@ namespace Echecs.Domaine
             // changer d'état
             if (ok)
             {
-                destination.Link(depart.piece);
-                depart.Unlink();
-                vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
-                vue.ActualiserCase(depart.row, depart.col, null);
+                
+                // Roque
+                if(depart.piece.GetType() == typeof(Roi) && Math.Abs(depart.row - destination.row) == 2 && depart.col - destination.col == 0)
+                {
+                    destination.Link(depart.piece);
+                    destination.piece.position = destination;
+                    depart.Unlink();
+
+                    vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
+                    vue.ActualiserCase(depart.row, depart.col, null);
+
+                    // Deplacement de la tour
+                    Case tourDepart;
+                    int oldRowTour;
+                    int oldColTour = destination.col;
+
+                    Case tourDestination;
+                    int newRowTour;
+                    int newColTour = destination.col;
+
+                    if(destination.row - depart.row == 2)
+                    {
+                        oldRowTour = 7;
+                        newRowTour = 5;
+                    }
+                    else
+                    {
+                        oldRowTour = 0;
+                        newRowTour = 3;
+                    }
+                    tourDepart = echiquier.cases[oldRowTour, oldColTour];
+                    tourDestination = echiquier.cases[newRowTour, newColTour];
+
+                    tourDestination.Link(tourDepart.piece);
+                    tourDestination.piece.position = tourDestination;
+                    tourDepart.Unlink();
+
+                    vue.ActualiserCase(tourDestination.row, tourDestination.col, tourDestination.piece.info);
+                    vue.ActualiserCase(tourDepart.row, tourDepart.col, null);
+                }
+                else
+                {
+
+                    // Is it a simple move or a piece has been eaten
+                    String moveMoveOrCapture = destination.piece != null ? "x" : "-";
+
+                    // Actualiser Captures
+                    if (destination.piece != null)
+                    {
+                        piecesCapturees.Add(destination.piece.info);
+                    }
+
+                    destination.Unlink();
+                    destination.Link(depart.piece);
+                    destination.piece.position = destination;
+                    depart.Unlink();
+
+                    vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
+                    vue.ActualiserCase(depart.row, depart.col, null);
+                }
+                vue.ActualiserCaptures(piecesCapturees);
                 ChangerEtat();
             }
                 
