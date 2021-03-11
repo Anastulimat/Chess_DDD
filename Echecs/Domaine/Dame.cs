@@ -53,11 +53,18 @@ namespace Echecs.Domaine
                     ++i;
                 }
                 while (deplacementPossible && i < Math.Abs(diffCol));
+
+                // On check si la case destination est autorisée mais il y a une piece d'une couleur dedans
+                if (i == Math.Abs(diffCol))
+                {
+                    deplacementPossible = (joueur.partie.echiquier.cases[destination.row, destination.col].piece == null || DeplacementSurLaCouleurInverse(destination));
+                }
             }
 
             if (diffCol == 0 && diffRow != 0)
             {
-                
+                rowToCheck = this.position.row;
+
                 // On vérifie si le déplacement est possible et si la voie est libre
                 do
                 {
@@ -78,7 +85,15 @@ namespace Echecs.Domaine
                     ++i;
                 }
                 while (deplacementPossible && i < Math.Abs(diffRow));
+
+                // On check si la case destination est autorisée mais il y a une piece d'une couleur dedans
+                if (i == Math.Abs(diffRow))
+                {
+                    deplacementPossible = (joueur.partie.echiquier.cases[destination.row, destination.col].piece == null || DeplacementSurLaCouleurInverse(destination));
+                }
             }
+
+
 
             /*****************************************************
              * Déplacement du fou
@@ -116,6 +131,11 @@ namespace Echecs.Domaine
                     }
                     ++i;
                 } while (deplacementPossible && i < Math.Abs(diffCol));
+
+                if (i == Math.Abs(diffCol))
+                {
+                    deplacementPossible = (joueur.partie.echiquier.cases[destination.row, destination.col].piece == null || DeplacementSurLaCouleurInverse(destination));
+                }
             }
 
             return deplacementPossible;
