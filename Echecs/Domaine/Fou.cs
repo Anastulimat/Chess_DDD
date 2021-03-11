@@ -13,6 +13,9 @@ namespace Echecs.Domaine
 
         public override bool Deplacer(Case destination)
         {
+            if (DeplacementSurLaMemeCouleur(destination))
+                return false;
+
             bool deplacementPossible = false;
 
             int diffCol = destination.col - this.position.col;
@@ -54,6 +57,11 @@ namespace Echecs.Domaine
                     }
                     ++i;
                 } while (deplacementPossible && i < Math.Abs(diffCol));
+
+                if(i == Math.Abs(diffCol))
+                {
+                    deplacementPossible = (joueur.partie.echiquier.cases[destination.row, destination.col].piece == null || DeplacementSurLaCouleurInverse(destination));
+                }
             }
 
             return deplacementPossible;
