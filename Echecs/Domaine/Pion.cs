@@ -11,28 +11,37 @@ namespace Echecs.Domaine
     {
         public Pion(Joueur joueur) : base(joueur, TypePiece.Pion) { }
 
-        private bool premierDeplacement = true;
 
         public override bool Deplacer(Case destination)
         {
+            if (DeplacementSurLaMemeCouleur(destination))
+                return false;
+
             bool deplacementPossible = false;
 
             // Blancs
             if(this.info.couleur == CouleurCamp.Blanche)
             {
-                Console.WriteLine("PremierDeplacementPossible(destination) = " + PremierDeplacementPossible(destination));
-                if(PremierDeplacementPossible(destination) || destination.col - this.position.col == -1 && destination.row - this.position.row == 0)
+                if(PremierDeplacementPossible(destination) || destination.col - this.position.col == -1)
                 {
-                    deplacementPossible = true;
+                    if ((destination.row - this.position.row == 0 && !DeplacementSurLaCouleurInverse(destination))
+                        || (Math.Abs(destination.row - this.position.row) == 1 && DeplacementSurLaCouleurInverse(destination)))
+                    {
+                        deplacementPossible = true;
+                    }
                 }
             }
 
             //Noirs
             else
             {
-                if(PremierDeplacementPossible(destination) || destination.col - this.position.col == 1 && destination.row - this.position.row == 0)
+                if (PremierDeplacementPossible(destination) || destination.col - this.position.col == 1)
                 {
-                    deplacementPossible = true;
+                    if ((destination.row - this.position.row == 0 && !DeplacementSurLaCouleurInverse(destination)) 
+                        || (Math.Abs(destination.row - this.position.row) == 1 && DeplacementSurLaCouleurInverse(destination)))
+                    {
+                        deplacementPossible = true;
+                    }
                 }
             }
 
@@ -42,10 +51,16 @@ namespace Echecs.Domaine
             return deplacementPossible;
         }
 
+
+
+        /**
+         * Vérifier si on peut déplacer le pion de deux cases au début du  
+         */
         private bool PremierDeplacementPossible(Case destination)
         {
             bool deplacementPossible = false;
 
+            //Blanc
             if(this.info.couleur == CouleurCamp.Blanche)
             {
                 if(premierDeplacement 
@@ -56,6 +71,7 @@ namespace Echecs.Domaine
                     deplacementPossible = true;
                 }
             }
+            //Noir
             else
             {
                 if (premierDeplacement
