@@ -11,6 +11,7 @@ namespace Echecs.Domaine
     {
         // attributs
         public InfoPiece info;
+        public bool premierDeplacement = true;
 
         // associations
         public Joueur joueur;
@@ -28,6 +29,11 @@ namespace Echecs.Domaine
         public bool DeplacementSurLaMemeCouleur(Case destination)
         {
             return destination.piece != null && destination.piece.joueur.couleur == this.joueur.couleur;
+        }
+
+        public bool DeplacementSurLaCouleurInverse(Case destination)
+        {
+            return destination.piece != null && destination.piece.joueur.couleur != this.joueur.couleur;
         }
     }
 }

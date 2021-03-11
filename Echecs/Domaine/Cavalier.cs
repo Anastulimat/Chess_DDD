@@ -13,6 +13,9 @@ namespace Echecs.Domaine
 
         public override bool Deplacer(Case destination)
         {
+            if (DeplacementSurLaMemeCouleur(destination))
+                return false;
+
             bool deplacementPossible = false;
 
             int diffCol = Math.Abs(destination.col - this.position.col);
