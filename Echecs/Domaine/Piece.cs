@@ -12,6 +12,7 @@ namespace Echecs.Domaine
         // attributs
         public InfoPiece info;
         public bool premierDeplacement = true;
+        public bool deplacementDeuxCases = false;
 
         // associations
         public Joueur joueur;

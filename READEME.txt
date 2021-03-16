@@ -1,0 +1,18 @@
+Echecs TP3
+===========
+
+*- Projet réalisé par :
+	- Anas TULIMAT
+	- Nicolas PRADELS
+	- Guillaume DEMEYERE
+
+
+*- Features implémentées:
+	- Mise en place l'échiquier.
+	- Factorisation des pièces.
+	- Position des pièces.
+	- Mettre à jour l'affichage dans la méthode DeplacerPiece dans la class Partie.
+	- Déplacement de toutes les pièces.
+	- Le roque.
+	- La prise en passant.
+	- L'affichage des pièces perdues.

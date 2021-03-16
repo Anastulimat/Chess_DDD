@@ -130,11 +130,43 @@ namespace Echecs.Domaine
                     vue.ActualiserCase(tourDestination.row, tourDestination.col, tourDestination.piece.info);
                     vue.ActualiserCase(tourDepart.row, tourDepart.col, null);
                 }
+
+                // La prise en passant
+                if (depart.piece.GetType() == typeof(Pion) 
+                    && Math.Abs(depart.row - destination.row) == 1 
+                    && Math.Abs(depart.col - destination.col) == 1)
+                {
+                    Console.WriteLine("depart.row - destination.row = " + (depart.row - destination.row));
+                    Console.WriteLine("depart.col - destination.col = " + (depart.col - destination.col));
+
+                    if(depart.row - destination.row == -1)
+                    {
+                        piecesCapturees.Add(echiquier.cases[depart.row + 1, depart.col].piece.info);
+                        vue.ActualiserCase(depart.row + 1, depart.col, null);
+                    }
+                        
+
+                    if (depart.row - destination.row == 1)
+                    {
+                        piecesCapturees.Add(echiquier.cases[depart.row - 1, depart.col].piece.info);
+                        vue.ActualiserCase(depart.row - 1, depart.col, null);
+                    }
+
+
+
+
+                    destination.Link(depart.piece);
+                    destination.piece.position = destination;
+                    depart.Unlink();
+
+
+
+                    vue.ActualiserCase(destination.row, destination.col, destination.piece.info);
+                    vue.ActualiserCase(depart.row, depart.col, null);
+                }
+
                 else
                 {
-
-                    // Is it a simple move or a piece has been eaten
-                    String moveMoveOrCapture = destination.piece != null ? "x" : "-";
 
                     // Actualiser Captures
                     if (destination.piece != null)

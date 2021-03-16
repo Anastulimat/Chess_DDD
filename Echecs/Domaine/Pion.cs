@@ -29,6 +29,26 @@ namespace Echecs.Domaine
                     {
                         deplacementPossible = true;
                     }
+
+                    // Prise en pasasnt pour les blancs à droite
+                    if (destination.row - this.position.row == 1 
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece != null
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece.GetType() == typeof(Pion)
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece.deplacementDeuxCases
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece.info.couleur != this.info.couleur)
+                    {
+                        deplacementPossible = true;
+                    }
+
+                    // Prise en pasasnt pour les blancs à guache
+                    if (destination.row - this.position.row == -1
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece != null
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece.GetType() == typeof(Pion)
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece.deplacementDeuxCases == true
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece.info.couleur != this.info.couleur)
+                    {
+                        deplacementPossible = true;
+                    }
                 }
             }
 
@@ -42,11 +62,35 @@ namespace Echecs.Domaine
                     {
                         deplacementPossible = true;
                     }
+
+                    // Prise en pasasnt pour les noirs à droite
+                    if (destination.row - this.position.row == 1
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece != null
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece.GetType() == typeof(Pion)
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece.deplacementDeuxCases
+                        && joueur.partie.echiquier.cases[this.position.row + 1, this.position.col].piece.info.couleur != this.info.couleur)
+                    {
+                        deplacementPossible = true;
+                    }
+
+                    // Prise en pasasnt pour les noirs à guache
+                    if (destination.row - this.position.row == -1
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece != null
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece.GetType() == typeof(Pion)
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece.deplacementDeuxCases == true
+                        && joueur.partie.echiquier.cases[this.position.row - 1, this.position.col].piece.info.couleur != this.info.couleur)
+                    {
+                        deplacementPossible = true;
+                    }
                 }
             }
 
+            if (!premierDeplacement)
+                deplacementDeuxCases = false;
+
             if (deplacementPossible && premierDeplacement)
                 premierDeplacement = false;
+
 
             return deplacementPossible;
         }
@@ -69,6 +113,7 @@ namespace Echecs.Domaine
                     && joueur.partie.echiquier.cases[this.position.row, this.position.col - 2].piece == null)
                 {
                     deplacementPossible = true;
+                    deplacementDeuxCases = true;
                 }
             }
             //Noir
@@ -80,6 +125,7 @@ namespace Echecs.Domaine
                     && joueur.partie.echiquier.cases[this.position.row, this.position.col + 2].piece == null)
                 {
                     deplacementPossible = true;
+                    deplacementDeuxCases = true;
                 }
             }
 
